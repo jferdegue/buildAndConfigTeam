@@ -1,0 +1,14 @@
+{% for oneProject in projects %}
+<li>
+<img src={{ oneProject.picture }}>
+<p class=project>{{ oneProject.name }}</p>
+<form action=/ method=post>
+	<input type=hidden name=project value='{{ oneProject.name }}'>
+	<select name=projectStage>
+	{% for oneStage in oneProject.stages %}
+		<option value='{{ oneStage.name }}'>{{ oneStage.name }}</option>
+	{% endfor %}
+	</select>
+</form>
+</li>
+{% endfor %}

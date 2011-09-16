@@ -1,0 +1,14 @@
+<html>
+<head>
+<title>
+Add a new project
+</title></head><body>
+{% if message %}
+<div class=message>{{ message }}</div>
+{% endif %}
+<form action={{ uploadLink }} method=post enctype="multipart/form-data">
+<input type=file name=picture>
+<input type=text name=name>
+<input type=submit>
+</form>
+</body></html>
