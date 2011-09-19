@@ -91,7 +91,22 @@ class MainHandler(webapp.RequestHandler):
         }
         path = os.path.join(os.path.dirname(__file__), 'template','MainHandler.htm')
         self.response.out.write(template.render(path, template_values))
-        
+    
+    def post(self):
+        mobileBrowsers=['iPad','Android','iPhone']
+        mobileDevice=False
+        agent=self.request.user_agent
+        for oneToken in mobileBrowsers:
+            if not agent.replace(oneToken,"") == agent:
+                mobileDevice=True
+                break
+        itmsLink="itms-services://?action=download-manifest&url=https://nimobileapps.appspot.com/buildPlist/%s/%s/%s/a.plist" % (self.request.get('project'), self.request.get('projectStage'), 'Mario.ipa')
+        if mobileDevice:
+            self.redirect(itmsLink)
+        else:
+            self.response.out.write(itmsLink)
+            
+    
 class addProject(blobstore_handlers.BlobstoreUploadHandler):
     def get(self):
         template_values = {
