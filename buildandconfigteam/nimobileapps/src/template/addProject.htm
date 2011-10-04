@@ -7,8 +7,11 @@ Add a new project
 <div class=message>{{ message }}</div>
 {% endif %}
 <form action={{ uploadLink }} method=post enctype="multipart/form-data">
-<input type=file name=picture>
-<input type=text name=name>
-<input type=submit>
+<table border=1>
+<tr><td>Avatar :</td><td><input type=file name=picture></td></tr>
+<tr><td>Anthill Pro project :</td><td><input type=text name=name></td></tr>
+<tr><td>Project Label :</td><td><input type=text name=label></td></tr>
+<tr><td colspan=2><input type=submit></td></tr>
+</table>
 </form>
 </body></html>

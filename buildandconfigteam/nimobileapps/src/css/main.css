@@ -1,0 +1,39 @@
+.additionalVersions {
+	display: none;
+	margin-left: 270px;
+padding: 20px;
+margin-top: 30px;
+border-radius: 15px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+}
+
+.additionalVersions h3 {
+	border-radius: 15px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+padding: 10px;
+}
+
+#allProjects li {
+	list-style: none;
+	border-radius: 15px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+background: lightgray;
+padding: 25px;
+margin:50px;
+}
+
+.productPicture {
+	width:250px;
+	float: left;
+margin-right: 20px;
+border-radius: 15px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+}
+
+.clearfix {
+clear: both;
+}

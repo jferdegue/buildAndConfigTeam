@@ -2,11 +2,15 @@
 <div class=message>{{ message }}</div>
 {% endif %}
 <form action=/addProjectStage method=post>
-<select name=project>
+<table border=1>
+<tr><td>Project:</td><td><select name=project>
 {% for oneProject in projects %}
     <option value='{{ oneProject.name }}'>{{ oneProject.name }}</option>
 {% endfor %}
-</select>
-<input type=text name=name>
-<input type=submit>
+</select></td></tr>
+<tr><td>S3 folder :</td><td><input type=text name=name></td></tr>
+<tr><td>Stage label :</td><td><input type=text name=label></td></tr>
+<tr><td>Default stage :</td><td><input type=checkbox name=defaultStage value='yes'></td></tr>
+<tr><td colspan=2><input type=submit></td></tr>
+</table>
 </form>

@@ -1,15 +1,47 @@
+<html><head>
+
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/excite-bike/jquery-ui-1.8.16.custom.css">
+<script src="https://www.google.com/jsapi?key={{ GoogleLibraryKey }}" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+<script language=javascript>
+function versionsDisplay(obj) {
+	if ($(obj).siblings(".additionalVersions").is(":visible")) {
+		$(obj).siblings(".additionalVersions").hide('blind', {}, 500);
+	} else {
+		$(obj).siblings(".additionalVersions").show('blind', {}, 500);	
+	}
+	
+}
+</script>
+</head><body>
+{{ greeting }}
+<ul id=allProjects>
 {% for oneProject in projects %}
 <li>
-<img src={{ oneProject.picture }}>
-<p class=project>{{ oneProject.name }}</p>
+<img src={{ oneProject.picture }} class=productPicture>
+<p class=project>{{ oneProject.label }}</p>
 <form action=/ method=post>
 	<input type=hidden name=project value='{{ oneProject.name }}'>
-	<select name=projectStage>
-	{% for oneStage in oneProject.stages %}
-		<option value='{{ oneStage.name }}'>{{ oneStage.name }}</option>
-	{% endfor %}
-	</select>
-	<input type=submit value='Download'>
+	<input type=hidden name=projectStage value='{{ oneProject.defaultStage.name }}'>
+	<input type=submit value='Download the latest {{ oneProject.defaultStage.label }}'>
 </form>
+<a href=# onclick=javascript:versionsDisplay(this)>See other versions</a>
+<div class=" ui-widget-content additionalVersions">
+		<h3 class="ui-widget-header ui-corner-all">Other available versions from project {{ oneProject.label }}</h3>
+	<p>You can choose the version that you want to download from below :</p>
+	{% for oneStage in oneProject.stages %}
+	<form action=/ method=post>
+		<input type=hidden name=project value='{{ oneProject.name }}'>
+		<input type=hidden name=projectStage value='{{ oneStage.name }}'>
+		<input type=submit value='Download the latest {{ oneStage.label }}'>
+	</form>
+{% endfor %}
+</div>
+<div class='clearfix'></div>
 </li>
 {% endfor %}
+
+</ul>
+</body></html>
