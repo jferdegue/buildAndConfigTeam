@@ -160,6 +160,14 @@ class oneUser(db.Model):
     emailString = db.StringProperty(multiline=False)
     xmppEnabled = db.BooleanProperty(default=False)
         
+    def isValid():
+        isValid= False
+        for aValidUser in db.Query(validUser).filter('emailString =',self.emailString):
+            isValid= True
+        return isValid
+    
+class validUser(db.Model):
+    emailString = db.StringProperty(multiline=False)       
 ###################################################################################
 ###################################################################################
 ###### END OF DATASTORE DECLARATION
@@ -179,6 +187,13 @@ class MainHandler(webapp.RequestHandler):
                 
             theUser=oneUser(key_name=user.user_id(), emailString=user.email().lower())
             theUser.put()
+            if not theUser.isValid():
+                template_values = {
+                                   'GoogleLibraryKey': config.get('Third Parties','GoogleLibraryKey'),
+                }
+                path = os.path.join(os.path.dirname(__file__), 'template','noAccess.htm')
+                self.response.out.write(template.render(path, template_values))
+                return
             if not theUser.xmppEnabled:
                 logging.debug("Sending an invite to %s" % theUser.user.email())
                 xmpp.send_invite(theUser.user.email(),'%s@%s.appspotchat.com' % (config.get('xmpp','fromAddress'), config.get('General','appName')))
@@ -303,7 +318,17 @@ class serveRelease(webapp.RequestHandler):
                             (user.nickname(), users.create_logout_url("/")))
         else:
             greeting=''
-            
+        
+        theUser=oneUser(key_name=user.user_id(), emailString=user.email().lower())
+        theUser.put()
+        if not theUser.isValid():
+            template_values = {
+                               'GoogleLibraryKey': config.get('Third Parties','GoogleLibraryKey'),
+            }
+            path = os.path.join(os.path.dirname(__file__), 'template','noAccess.htm')
+            self.response.out.write(template.render(path, template_values))
+            return
+        
         mobileBrowsers=['iPad','Android','iPhone']
         mobileDevice=False
         agent=self.request.user_agent
@@ -482,6 +507,15 @@ class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
                             (user.nickname(), users.create_logout_url("/")))
         else:
             greeting=''
+        theUser=oneUser(key_name=user.user_id(), emailString=user.email().lower())
+        theUser.put()
+        if not theUser.isValid():
+            template_values = {
+                               'GoogleLibraryKey': config.get('Third Parties','GoogleLibraryKey'),
+            }
+            path = os.path.join(os.path.dirname(__file__), 'template','noAccess.htm')
+            self.response.out.write(template.render(path, template_values))
+            return
         resource = str(urllib.unquote(resource))
         blob_info = blobstore.BlobInfo.get(resource)
         self.send_blob(blob_info)
@@ -498,6 +532,15 @@ class feedback(webapp.RequestHandler):
                             (user.nickname(), users.create_logout_url("/")))
         else:
             greeting=''
+        theUser=oneUser(key_name=user.user_id(), emailString=user.email().lower())
+        theUser.put()
+        if not theUser.isValid():
+            template_values = {
+                               'GoogleLibraryKey': config.get('Third Parties','GoogleLibraryKey'),
+            }
+            path = os.path.join(os.path.dirname(__file__), 'template','noAccess.htm')
+            self.response.out.write(template.render(path, template_values))
+            return
         initialRequest=auditTrail.get_by_id(int(requestId))
         if not initialRequest.user==user:
             self.response.out.write('We except %s to give us feedback on this release, however you are connected as %s. Could you please logout and reconnect as %s ?' % (initialRequest.user.nickname, user.nickname, initialRequest.user.nickname))
@@ -521,7 +564,15 @@ class feedback(webapp.RequestHandler):
                             (user.nickname(), users.create_logout_url("/")))
         else:
             greeting=''
-        
+        theUser=oneUser(key_name=user.user_id(), emailString=user.email().lower())
+        theUser.put()
+        if not theUser.isValid():
+            template_values = {
+                               'GoogleLibraryKey': config.get('Third Parties','GoogleLibraryKey'),
+            }
+            path = os.path.join(os.path.dirname(__file__), 'template','noAccess.htm')
+            self.response.out.write(template.render(path, template_values))
+            return
         theAuditTrail=auditTrail.get_by_id(int(requestId))
         thefeedback=Feedback(auditTrail=theAuditTrail,comment=self.request.get('comment'),type=self.request.get('type'),score=int(10*float(self.request.get('score'))))
         thefeedback.put()
@@ -546,7 +597,17 @@ class backend(webapp.RequestHandler):
                             (user.nickname(), users.create_logout_url("/")))
         else:
             greeting=''
-            
+        
+        theUser=oneUser(key_name=user.user_id(), emailString=user.email().lower())
+        theUser.put()
+        if not theUser.isValid():
+            template_values = {
+                               'GoogleLibraryKey': config.get('Third Parties','GoogleLibraryKey'),
+            }
+            path = os.path.join(os.path.dirname(__file__), 'template','noAccess.htm')
+            self.response.out.write(template.render(path, template_values))
+            return
+        
         message=''
         if self.request.get('key'):
             theStage=projectStage.get_by_key_name(self.request.get('key'))
