@@ -1,0 +1,4 @@
+cron:
+- description: Cleaning of old facets
+  url: /maintenance
+  schedule: every 24 hours

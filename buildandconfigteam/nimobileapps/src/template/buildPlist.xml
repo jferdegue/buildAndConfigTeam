@@ -11,19 +11,21 @@
 					<key>kind</key> 
 					<string>software-package</string> 
 					<key>url</key> 
-					<string><![CDATA[{{ link }}]]></string> 
+					<string><![CDATA[https://{{ url }}/serve/{{ facet.binary }}/{{ facetDetails.filename }}]]></string> 
 				</dict> 
 			</array> 
 			<key>metadata</key> 
 			<dict> 
 				<key>bundle-identifier</key> 
-				<string>com.nigeneric.MarioDemoApp</string> 
+				<string>{{ facet.projectStage.facet }}</string> 
+				<key>CFBundleDisplayName</key>
+				<string>{{ facet.version }}</string>
 				<key>bundle-version</key> 
-				<string>{{ version }}</string> 
+				<string>{{ facet.version }}</string> 
 				<key>kind</key> 
 				<string>software</string> 
 				<key>title</key> 
-				<string>{{ params.project }}</string> 
+				<string>{{ facet.project.label }} in {{ facet.projectStage.label }}</string> 
 			</dict> 
 		</dict> 
 	</array> 

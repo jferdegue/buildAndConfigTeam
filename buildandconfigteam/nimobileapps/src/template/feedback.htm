@@ -1,0 +1,79 @@
+<html><head>
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/excite-bike/jquery-ui-1.8.16.custom.css">
+<script src="https://www.google.com/jsapi?key={{ GoogleLibraryKey }}" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/jquery.raty-1.4.3/js/jquery.raty.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	$('#target').raty({
+		  cancel:     true,
+		  cancelHint: 'remove my rating',
+		  target:     '#hint',
+		  path: 	  '/static/jquery.raty-1.4.3/img',
+		  half:       true
+	});
+	$("input[name=type]").click(function() {
+		switch($(this).val())
+		{
+		case 'story':
+			$("#guidance").html("Please describe us as precisely as you can your suggestion. You could write thing such as 'As a user, I would like to search for articles that are older than 6 months.'");
+			break;
+		case 'bug':
+			$("#guidance").html("Please be as descriptive about the bug as you can. For us, it will be easier to solve 'I clicked on an article and after a few blinks from the download icon, the application crashed' rather than 'The application crashed'");
+			break;
+		case 'comment':
+			$("#guidance").html("Thanks for your feedback.");
+			break;
+		}
+	})
+});
+</script>
+<style>
+div.entryForm {
+padding: 15px;
+margin: 10px;
+border: 1px solid black;
+}
+div#guidance {
+float:right;
+}
+.clearfix {clear: both;}
+</style>
+
+</head>
+<body>
+{{ greeting }}
+
+<h1>Thanks for taking the time to give us some feedback.</h1>
+What is your feedback about <b>{{ initialRequest.projectStage.label }}</b> from project <b>{{ initialRequest.project.label }}</b> ?
+
+<form action=# method=post>
+<div class=entryForm style='height:60px'>
+	Rate your overall experience :
+	<div id="target"></div>
+	<div id="hint"></div>
+</div>
+<div class=entryForm>
+	What is your feedback ?
+	<input type=radio name=type value=bug id=bug><label for=bug>A bug</label>
+	<input type=radio name=type value=story id=story><label for=story>A suggestion to improve</label>
+	<input type=radio name=type value=comment id=comment><label for=comment>A general comment</label>
+</div>
+<div class=entryForm>
+<div style='width:40%;float:left;'>
+Please enter your comment below :<br>
+<textarea name=comment cols=45 rows=8></textarea>
+</div>
+<div id=guidance style='width:60%'></div>
+<div class=clearfix></div>
+</div>
+
+<input type=submit>
+	
+</table>
+</form>
+
+</body>
+</html>

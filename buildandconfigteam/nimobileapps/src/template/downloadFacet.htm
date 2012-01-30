@@ -1,0 +1,16 @@
+{{ greeting }}
+
+{% if message %}
+<h1>{{ message }}</h1>
+{% endif %}
+
+<h1>Your download is ready.</h1>
+
+<p>If your device has a QR code reader, just point it to the code below.</p>
+
+<!-- <img src=http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl={{ shortLink }}&chld=H|0> -->
+<img src={{ url }}>
+
+<p>Your device cannot read QR-codes ? No worries, you should also have received a link to your download. Just check your emails from your devices and follow the instructions.</p>
+
+<p>Alternatively, point the browser of your mobile device to {{ shortLink }} <!--  {{ itmsLink }} --></p>
